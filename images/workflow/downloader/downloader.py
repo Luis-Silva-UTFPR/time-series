@@ -245,6 +245,10 @@ def iterate_over_cycle(start_year, end_year):
         ndwi_array_4d = np.expand_dims(ndwi_array_4d, axis=-1)
         bands_array_4d = np.stack(all_bands, axis=0)
 
+        ndvi_array_4d = np.transpose(ndvi_array_4d, (0, 3, 1, 2))
+        ndwi_array_4d = np.transpose(ndwi_array_4d, (0, 3, 1, 2))
+        bands_array_4d = np.transpose(bands_array_4d, (0, 3, 1, 2))
+
         timestamp_dict = {
             "timestamp": timestamp,
             "peak_ndvi": peak_ndvi_date
