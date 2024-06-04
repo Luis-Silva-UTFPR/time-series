@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import ee
@@ -16,9 +17,6 @@ def initialize():
     # Autenticação usando o JSON do Service Account
     credentials = ee.ServiceAccountCredentials(email, service_account)
     ee.Initialize(credentials)
-
-
-initialize()
 
 
 def calculateNDWI(image):
@@ -170,7 +168,7 @@ def get_max_ndvi_date(collection, roi):
     return max_image
 
 
-def iterate_over_cycle(start_year='2017', end_year='2018'):
+def iterate_over_cycle(start_year, end_year):
 
     gdf = gpd.read_file("dataset_final.gpkg")
     gdf.to_crs(epsg=4326, inplace=True)
@@ -262,4 +260,19 @@ def iterate_over_cycle(start_year='2017', end_year='2018'):
             json.dump(timestamp_dict, json_file)
 
 
-iterate_over_cycle()
+def main():
+
+    parser = argparse.ArgumentParser(
+        description="baixar imagens com base no ano safra"
+    )
+    parser.add_argument("start_year", type=int, help="start year")
+    parser.add_argument("end_year", type=int, help="end year")
+
+    args = parser.parse_args()
+
+    initialize()
+    iterate_over_cycle(args.start_year, args.end_year)
+
+
+if __name__ == "__main__":
+    main()
