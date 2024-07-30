@@ -2,3 +2,4 @@ images/workflow/downloader/ee-luissilva2024-69a980d6b311.json
 images/workflow/data/*
 !images/workflow/data/__init__.py
 *.parquet
+*.gpkg
